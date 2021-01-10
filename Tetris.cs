@@ -25,6 +25,7 @@ namespace TetrisCS
 		
 		static Tetromino piece;
 		static bool GameOver = false;
+		static bool isPaused = false;
 		static Tetromino.Shape nextPiece;
 		
 		static uint score;
@@ -48,23 +49,29 @@ namespace TetrisCS
 			while (!GameOver) 
 			{
 				input = Console.ReadKey(true).Key;
-		
-				if (input == ConsoleKey.DownArrow && DoesPieceFit(piece.x, (sbyte)(piece.y + 1), ref piece.rotation))
-					++piece.y;
-			
-				else if (input == ConsoleKey.LeftArrow && DoesPieceFit((sbyte)(piece.x - 1), piece.y, ref piece.rotation))
-					--piece.x;
-			
-				else if (input == ConsoleKey.RightArrow && DoesPieceFit((sbyte)(piece.x + 1), piece.y, ref piece.rotation))
-					++piece.x;
-			
-				else if (input == ConsoleKey.Z)
-				{
-					var nextRotation = (short)(piece.rotation + 90);
 				
-					if (DoesPieceFit(piece.x, piece.y, ref nextRotation))
-						piece.rotation = nextRotation;
+				if (!isPaused)
+				{
+					if (input == ConsoleKey.DownArrow && DoesPieceFit(piece.x, (sbyte)(piece.y + 1), ref piece.rotation))
+						++piece.y;
+				
+					else if (input == ConsoleKey.LeftArrow && DoesPieceFit((sbyte)(piece.x - 1), piece.y, ref piece.rotation))
+						--piece.x;
+				
+					else if (input == ConsoleKey.RightArrow && DoesPieceFit((sbyte)(piece.x + 1), piece.y, ref piece.rotation))
+						++piece.x;
+				
+					else if (input == ConsoleKey.Z)
+					{
+						var nextRotation = (short)(piece.rotation + 90);
+					
+						if (DoesPieceFit(piece.x, piece.y, ref nextRotation))
+							piece.rotation = nextRotation;
+					}
 				}
+				
+				if (input == ConsoleKey.Spacebar)
+					isPaused = !isPaused;
 				
 				Console.Beep(800, 20);
 			}
