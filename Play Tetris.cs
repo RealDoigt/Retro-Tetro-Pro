@@ -22,21 +22,19 @@ namespace TetrisCS
 			DrawUI();
 			
 			new Thread(GetInput).Start();
+			WriteStats(score, level, lineCounter, fallingTime);
 			
 			while (!GameOver)
 			{
 				field.PaintAt(1, 1);
-				
-				WriteStats(score, level, lineCounter, fallingTime);
-				 
-
 				DrawPiece(ref piece);
-				
 				Thread.Sleep(tickDuration);
 				++tickCounter;
 				
 				if (tickCounter == fallingTime)
 				{
+					WriteStats(score, level, lineCounter, fallingTime);
+					
 					if (DoesPieceFit(piece.x, (sbyte)(piece.y + 1), ref piece.rotation))
 						++piece.y;
 					
