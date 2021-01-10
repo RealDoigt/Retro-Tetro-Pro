@@ -288,6 +288,7 @@ namespace TetrisCS
 
 		public static void Main(string[] args)
 		{
+			Console.CursorVisible = false;
 			var exit = false;
 			var logo = new ConsoleImage(new System.Drawing.Bitmap("image.png"));
 			byte choice = 0;

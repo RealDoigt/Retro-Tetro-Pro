@@ -65,6 +65,8 @@ namespace TetrisCS
 					if (DoesPieceFit(piece.x, piece.y, ref nextRotation))
 						piece.rotation = nextRotation;
 				}
+				
+				Console.Beep(800, 20);
 			}
 		}
 		
@@ -100,7 +102,7 @@ namespace TetrisCS
 			string temp;
 			
 			if (enableChars)
-				temp = "▒▓█X@#O+☻♠♣♥♦♫";
+				temp = "☻♥♫";
 			
 			else
 				temp = "█";
@@ -184,6 +186,9 @@ namespace TetrisCS
 					return getScore(300);
 					
 				case 4:
+					Console.Beep(800, 100);
+					Console.Beep(1000, 200);
+					Console.Beep(800, 500);
 					return getScore(1200);
 					
 				default:
