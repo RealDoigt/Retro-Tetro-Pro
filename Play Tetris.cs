@@ -27,21 +27,8 @@ namespace TetrisCS
 			{
 				field.PaintAt(1, 1);
 				
-				Console.CursorLeft = 1;
-				Console.CursorTop = FIELD_HEIGHT + 3;
-				Console.Write(score);
-				
-				Console.CursorLeft = NEXT_POS_X + 1;
-				Console.CursorTop = NEXT_POS_Y + 7;
-				Console.Write(level); // Levels
-				
-				Console.CursorLeft = NEXT_POS_X + 1;
-				Console.CursorTop = NEXT_POS_Y + 8;
-				Console.Write(lineCounter); // lines Cleared
-				
-				Console.CursorLeft = NEXT_POS_X + 1;
-				Console.CursorTop = NEXT_POS_Y + 9;
-				Console.Write("{0}", fallingTime > 9 ? string.Format("{0}", fallingTime) : string.Format("{0} ", fallingTime)); // falling speed in Ticks
+				WriteStats(score, level, lineCounter, fallingTime);
+				 
 
 				DrawPiece(ref piece);
 				
@@ -56,17 +43,7 @@ namespace TetrisCS
 					else
 					{
 						// Locking piece into place
-						for (byte x = 0; x < Tetromino.LENGTH; ++x)
-							for (byte y = 0; y < Tetromino.LENGTH; ++y)
-							{
-								var c = piece.Type[Tetromino.GetIndexByRotation(x, y, ref piece.rotation)];
-								
-								if (c != ' ')
-								{
-									field[(ushort)(piece.x + x), (ushort)(piece.y + y)] = piece.Colour;
-									field.SetGlyph((ushort)(piece.x + x), (ushort)(piece.y + y), c);
-								}
-							}
+						LockPiece(ref piece, field);
 						
 						var linesCleared = ClearLines();
 						
