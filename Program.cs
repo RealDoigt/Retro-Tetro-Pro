@@ -59,13 +59,15 @@ namespace TetrisCS
 		
 		public static void MakeMainMenu()
 		{
-			RectanglePainting.DrawRectangle(RectanglePainting.SpecialBorderType.Wavish, 35, 10, 5, 10, ConsoleColor.Gray);
+			RectanglePainting.DrawRectangle(RectanglePainting.SpecialBorderType.Wavish, 35, 10, 6, 11, ConsoleColor.Gray);
 			Console.ForegroundColor = ConsoleColor.DarkGray;
 			Console.CursorLeft = 37;
 			Console.CursorTop = 11;
 			Console.WriteLine("Play");
 			Console.CursorLeft = 37;
 			Console.WriteLine("Options");
+			Console.CursorLeft = 37;
+			Console.WriteLine("Controls");
 			Console.CursorLeft = 37;
 			Console.Write("Exit");
 		}
@@ -285,6 +287,28 @@ namespace TetrisCS
 			settings.Save();
 			Console.Clear();
 		}
+		
+		public static void PrintControls()
+		{
+			const byte LEFT_PADDING = 2;
+			Console.Clear();
+			RectanglePainting.DrawRectangle(RectanglePainting.SpecialBorderType.Wavish, 0, 0, 5, 25, ConsoleColor.DarkRed);
+			Console.SetCursorPosition(LEFT_PADDING, 1);
+			Console.WriteLine("Arrow keys to move");
+			Console.CursorLeft = LEFT_PADDING;
+			Console.WriteLine("Space bar to pause");
+			Console.CursorLeft = LEFT_PADDING;
+			Console.WriteLine("Z to rotate");
+			Console.CursorTop += 2;
+		}
+		
+		public static void NavigateControls()
+		{
+			PrintControls();
+			Console.WriteLine("Press any key to return.");
+			Console.ReadKey(true);
+			Console.Clear();
+		}
 
 		public static void Main(string[] args)
 		{
@@ -296,7 +320,7 @@ namespace TetrisCS
 			if (System.IO.File.Exists("game.stgs"))
 				settings = new Settings("game.stgs");
 			
-			var actions = new Action[3];
+			var actions = new Action[4];
 			
 			// play the game
 			actions[0] = () => {
@@ -314,15 +338,22 @@ namespace TetrisCS
 				logo.Paint();
 			};
 			
+			// how to play
+			actions[2] = () => { 
+				
+				NavigateControls();
+				logo.Paint();
+			};
+			
 			// quit the game
-			actions[2] = () => exit = true;
+			actions[3] = () => exit = true;
 			
 			logo.Paint();
 			
 			while (!exit)
 			{
 				MakeMainMenu();
-				choice = PrintCursor(35, 11, 3, choice, actions[choice]);
+				choice = PrintCursor(35, 11, 4, choice, actions[choice]);
 			}
 		}
 	}
