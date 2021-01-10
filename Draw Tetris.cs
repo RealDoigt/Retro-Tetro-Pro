@@ -42,5 +42,20 @@ namespace TetrisCS
 			Console.CursorLeft = 2;
 			Console.Write("                 ");
 		}
+		
+		static void DrawPiece(ref Tetromino piece)
+		{
+			for (byte x = 0; x < Tetromino.LENGTH; ++x)
+					for (byte y = 0; y < Tetromino.LENGTH; ++y)
+					{ 
+						var c = piece.Type[Tetromino.GetIndexByRotation(x, y, ref piece.rotation)];
+						
+						if (c != ' ')
+						{
+							Painting.brush = c;
+							Painting.DrawCell((short)(piece.x + x + 1), (short)(piece.y + y + 1), piece.Colour);
+						}
+					}
+		}
 	}
 }

@@ -42,19 +42,8 @@ namespace TetrisCS
 				Console.CursorLeft = NEXT_POS_X + 1;
 				Console.CursorTop = NEXT_POS_Y + 9;
 				Console.Write("{0}", fallingTime > 9 ? string.Format("{0}", fallingTime) : string.Format("{0} ", fallingTime)); // falling speed in Ticks
-				
-				
-				for (byte x = 0; x < Tetromino.LENGTH; ++x)
-					for (byte y = 0; y < Tetromino.LENGTH; ++y)
-					{ 
-						var c = piece.Type[Tetromino.GetIndexByRotation(x, y, ref piece.rotation)];
-						
-						if (c != ' ')
-						{
-							Painting.brush = c;
-							Painting.DrawCell((short)(piece.x + x + 1), (short)(piece.y + y + 1), piece.Colour);
-						}
-					}
+
+				DrawPiece(ref piece);
 				
 				Thread.Sleep(tickDuration);
 				++tickCounter;
